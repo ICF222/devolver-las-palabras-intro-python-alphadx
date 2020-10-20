@@ -1,14 +1,43 @@
+def crea_lista_letras():
+  lista_letras = []
+  lista_letras = input("Ingrese las letras separadas por un espacio entre ellas:   ")
+  return lista_letras
+
+def validacion(lista_letras, linea):
+  lista_respaldo = []
+  for index in lista_letras:
+    lista_respaldo.append(index)
+  for i in linea:
+    encontrado = False
+    for j in lista_respaldo:
+      if i == j:
+        encontrado = True
+        lista_respaldo.remove(j)
+        break
+    if encontrado == False:
+      return False
+  return True
+
+
+
+
+def lee_archivo(lista_letras):
+  f = open ('listado-general-filtrado.txt','r')
+  lista_palabras_aceptadas = []
+  for i in f:
+    linea = i
+    linea = linea.rstrip('\n')
+    if validacion(lista_letras, linea) == True:
+      lista_palabras_aceptadas.append(linea)
+
+  print(lista_palabras_aceptadas)
+
+
 def main():
-  #La variable palabras es una lista con cada palabra del archivo de entrada
-  palabras = list() #["hola", "persona", "soy", "yo", "el", "profe"]
-  with open("./listado-general-filtrado.txt", "r") as entrada:
-    for i in entrada:
-      palabras.append(i[0:-1])
+  lista_letras = crea_lista_letras()
 
-  #La variable listaLetras es una lista donde en cada elemento habrá un símbolo de las letras recibidas por el usuario
-  lista_letras = list(input("Ingrese el listado de letras: ")) #["p","a","l","a","b","r","a"]
-
-  #escriba su lógica aquí
+  lee_archivo(lista_letras)
+  
 
 if(__name__ == "__main__"):
-  main()
+    main()
